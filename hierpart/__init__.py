@@ -1,0 +1,5 @@
+from hierpart import HierarchicalPartition
+from hierpart import load_hierarchical_partition
+from hierpart import save_hierarchical_partition
+from hierpart import hierarchical_mutual_informations
+from hierpart import normalized_hierarchical_mutual_informations
