@@ -7,4 +7,4 @@ If you are in linux, type on a terminal::
 
 otherwise, please follow this link http://www.ubuntu.com/download/desktop/install-ubuntu-desktop
 
-Alternativelly, you can download the package from github `https://github.com/rayohauno/hierpart.git`_
+Alternativelly, you can download the package from github https://github.com/rayohauno/hierpart.git
