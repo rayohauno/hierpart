@@ -1,3 +1,8 @@
+# This code is published according to the
+# GNU General Public License (GPL) version 2
+#
+# Personal disclaimer: Use this code at your own risk.
+
 import sys
 from collections import defaultdict
 import numpy
