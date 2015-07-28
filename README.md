@@ -3,8 +3,8 @@ A Python package that implements the HierarchicalPartition data structure.
 
 Find the documentation at
 
-    `http://readthedocs.org`_
+    http://readthedocs.org
     
 Specifically, at
 
-    `http://hierpart.readthedocs.org/en/latest/`_
+    http://hierpart.readthedocs.org/en/latest/
