@@ -6,6 +6,6 @@ setup(name='hierpart',
       url='https://bitbucket.org/rayohauno/hierpart',
       author='Juan I. Perotti',
       author_email='juanpool at gmail.com',
-      license='GPL-3.0',
+      license='GPL-2.0',
       packages=['hierpart'],
       zip_safe=False)
