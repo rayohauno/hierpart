@@ -37,6 +37,7 @@ On how to upload a python package to the Python Package Index (PyPI)
 
 1. https://docs.python.org/2/distutils/packageindex.html#package-index
 2. http://peterdowns.com/posts/first-time-with-pypi.html
+3. https://github.com/rayohauno/hierpart.git
 
 On how to make sphinx work on github
 ++++++++++++++++++++++++++++++++++++
