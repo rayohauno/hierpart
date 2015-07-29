@@ -11,7 +11,7 @@ What is **HierPart**?
 
 **HierPart** is a python package that implements the *hierarchical partition* data structure [1]_. Furthermore, it can be used to compute the *hierarchical mutual information* between hierarchical partitions.
 
-Hierarchical partitions can be used to represent the *hierarchical community structure* of a complex networks. Therefore, the hierarchical mutual information can be used to compare *hierarchical community structures*. In other words, the hierarchical mutual information provides a generalization of the traditional approach, where the standard mutual information is used to compare node partitions, ie., community structures. 
+Hierarchical partitions can be used to represent the *hierarchical community structure* of complex networks. Therefore, the hierarchical mutual information can be used to compare *hierarchical community structures*. In other words, the hierarchical mutual information provides a generalization of the traditional approach, where the standard mutual information is used to compare node partitions, ie., community structures. 
 
 Table of Contents:
 ------------------
