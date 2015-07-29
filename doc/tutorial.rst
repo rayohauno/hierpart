@@ -11,27 +11,30 @@ Example 1
 
 The first example is about constructing a ``HierarchicalPartition`` object::
 
-    >>> import hierpart as hp
+    >>> from hierpart import HierarchicalPartition
     >>>
     >>> # A HierarchicalPartition object is created. It contains the elements 'a','b',... 
     >>> # which, in this case are strings. But, they can be numbers, or whatever other 
     >>> # thing that can be stored in a set container.
-    >>> _hp=hp.HierarchicalPartition(['a','b','c','d','e','f'])
+    >>> hp=HierarchicalPartition(['a','b','c','d','e','f'])
     >>>
     >>> # To build the hierarchy, lets start from the root.
-    >>> _root=_hp.root()
+    >>> root=hp.root()
     >>>
     >>> # Lets add two children to the root. The elements the children will contain should 
     >>> # be specified. These elements should belong to the parent vertex, in this case, 
     >>> # the root. Otherwise, an error is raised.
-    >>> _n1=_hp.add_child(_root,['a','b','c'])
-    >>> _n2=_hp.add_child(_root,['d','e','f'])
+    >>> n1=hp.add_child(root,['a','b','c'])
+    >>> n2=hp.add_child(root,['d','e','f'])
     >>>
     >>> # Now we add children to the children, and so on...
-    >>> _hp.add_child(_n1,['a'])
-    >>> _n3=_hp.add_child(_n1,['b','c'])
-    >>> _hp.add_child(_n3,['b'])
-    >>> _hp.add_child(_n3,['c'])
+    >>> hp.add_child(_n1,['a'])
+    3
+    >>> n3=hp.add_child(n1,['b','c'])
+    >>> hp.add_child(n3,['b'])
+    5
+    >>> hp.add_child(n3,['c'])
+    6
 
 This creates the following hierarchy:
 
@@ -41,7 +44,7 @@ This creates the following hierarchy:
 ..
    .. image:: ./_images/toy_hierarchy.jpg
 
-.. image:: ./_images/toy_hierarchy.svg
+.. image:: ./_images/toy_hierarchy.png
         :width: 200pt
 
 
