@@ -4,7 +4,7 @@ Installation
 GitHub
 ------
 
-Download, or clone the package from github https://github.com/rayohauno/hierpart.git
+Download or clone the package from github https://github.com/rayohauno/hierpart.git
 
 
 ..
