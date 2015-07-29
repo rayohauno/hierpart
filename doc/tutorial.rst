@@ -41,7 +41,7 @@ This creates the following hierarchy:
 ..
    .. image:: ./_images/toy_hierarchy.jpg
 
-.. image:: ./_images/toy_hierarchy.png
+.. image:: ./_images/toy_hierarchy.svg
         :width: 200pt
 
 
