@@ -1351,24 +1351,72 @@ def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False,
     (1.0, 1.242453324894, 1.242453324894, 1.242453324894)
     >>> print normalized_hierarchical_mutual_information(hpx,hpy)
     (0.55788589130225974, 0.69314718055994529, 1.242453324894, 1.242453324894)
+    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='CS')
+    (0.55788589130225974, 0.69314718055994529, 1.242453324894, 1.242453324894)
+    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='add')
+    (0.55788589130225974, 0.69314718055994529, 1.242453324894, 1.242453324894)
+    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='max')
+    (0.55788589130225974, 0.69314718055994529, 1.242453324894, 1.242453324894)
+    >>>
+    >>> hpy=HierarchicalPartition(['a','b','c','d','e','f'])
+    >>> rooty=hpy.root()
+    >>> n1y=hpy.add_child(rooty,['a','b','c'])
+    >>> n2y=hpy.add_child(rooty,['d','e','f'])
+    >>> dummy=hpy.add_child(n1y,['a'])
+    >>> n3y=hpy.add_child(n1y,['b','c'])
+    >>> dummy=hpy.add_child(n3y,['b'])
+    >>> dummy=hpy.add_child(n3y,['c'])
+    >>> dummy=hpy.add_child(n2y,['d'])
+    >>> n4y=hpy.add_child(n2y,['e','f'])
+    >>> dummy=hpy.add_child(n4y,['e'])
+    >>> dummy=hpy.add_child(n4y,['f'])
+    >>> print normalized_hierarchical_mutual_information(hpx,hpy)
+    (0.83272228480884947, 1.242453324894, 1.242453324894, 1.791759469228055)
+    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='CS')
+    (0.83272228480884947, 1.242453324894, 1.242453324894, 1.791759469228055)
+    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='add')
+    (0.81896255088035252, 1.242453324894, 1.242453324894, 1.791759469228055)
+    >>> print normalized_hierarchical_mutual_information(hpx,hpy,norm='max')
+    (0.6934264036172707, 1.242453324894, 1.242453324894, 1.791759469228055)
     """
     HMI_xx=hierarchical_mutual_information(hierpart_x,hierpart_x,show=False)    
     HMI_yy=hierarchical_mutual_information(hierpart_y,hierpart_y,show=False)    
     HMI_xy=hierarchical_mutual_information(hierpart_x,hierpart_y,show=show)    
 
     if norm=='CS':
-        prod=HMI_xx*HMI_yy
-        if prod>0.0:
-            return HMI_xy/(prod**0.5),HMI_xy,HMI_xx,HMI_yy
+        _prod=HMI_xx*HMI_yy
+        if _prod>0.0:
+
+#            print '# HMI_xy',HMI_xy
+#            print '# HMI_xx',HMI_xx
+#            print '# HMI_yy',HMI_yy
+#            print '# _prod',_prod
+#            print '# HMI_xy/(_prod**0.5)',repr(HMI_xy/(_prod**0.5))
+
+            return HMI_xy/(_prod**0.5),HMI_xy,HMI_xx,HMI_yy
         return 0.0,HMI_xy,HMI_xx,HMI_yy
     elif norm=='add':
-        suma=HMI_xx+HMI_yy
-        if suma>0.0:
-            return 2.0*HMI_xy/suma,HMI_xy,HMI_xx,HMI_yy
+        _suma=HMI_xx+HMI_yy
+        if _suma>0.0:
+
+#            print '# HMI_xy',HMI_xy
+#            print '# HMI_xx',HMI_xx
+#            print '# HMI_yy',HMI_yy
+#            print '# _suma',_suma
+#            print '# 2.0*HMI_xy/_suma',repr(2.0*HMI_xy/_suma)
+
+            return 2.0*HMI_xy/_suma,HMI_xy,HMI_xx,HMI_yy
         return 0.0,HMI_xy,HMI_xx,HMI_yy
     elif norm=='max':
         _max=max(HMI_xx,HMI_yy)
         if _max>0.0:
+
+#            print '# HMI_xy',HMI_xy
+#            print '# HMI_xx',HMI_xx
+#            print '# HMI_yy',HMI_yy
+#            print '# _max',_max
+#            print '# HMI_xy/_max',repr(HMI_xy/_max)
+
             return HMI_xy/_max,HMI_xy,HMI_xx,HMI_yy
         return 0.0,HMI_xy,HMI_xx,HMI_yy
     else:
