@@ -1282,16 +1282,23 @@ def hierarchical_mutual_information(hierpart_x,hierpart_y,show=False):
     root_y=hierpart_y.root()
     return sub_hierarchical_mutual_information(hierpart_x,hierpart_y,root_x,root_y,0,show=show)
 
-def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False):
+def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False,norm='CS'):
     """Computes the normalized hierarchical mutual information between two partitions.
     More specifically, it computes i(T;T') where T and T' are two <HierarchicalPartitions>.
 
     Parameters
     ----------
-    hierpart_x : HierarchicalPartition
+    hierpart_x : <HierarchicalPartition>
         The tree T.
-    hierpart_y : HierarchicalPartition
+    hierpart_y : <HierarchicalPartition>
         The tree T'.
+    show : <bool=False>
+        If True, then it shows useful information during the computation process.
+    norm : <str='CS'>
+        One of 'CS' (or Cauchy Schwarz), 'add' (or additive), 'max' (or using the max function). The CS is defined as I(T,T')/sqrt(I(T,T)*I(T',T')). The add is defined as 2I(T,T')/(I(T,T)+I(T',T')). Finally, the max is defined as I(T,T')/max(I(T,T),I(T',T')).
+
+    Comment
+    -------
 
     Returns
     -------
@@ -1348,10 +1355,24 @@ def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False)
     HMI_xx=hierarchical_mutual_information(hierpart_x,hierpart_x,show=False)    
     HMI_yy=hierarchical_mutual_information(hierpart_y,hierpart_y,show=False)    
     HMI_xy=hierarchical_mutual_information(hierpart_x,hierpart_y,show=show)    
-    prod=HMI_xx*HMI_yy
-    if prod>0.0:
-        return HMI_xy/(prod**0.5),HMI_xy,HMI_xx,HMI_yy
-    return 0.0,HMI_xy,HMI_xx,HMI_yy
+
+    if norm=='CS':
+        prod=HMI_xx*HMI_yy
+        if prod>0.0:
+            return HMI_xy/(prod**0.5),HMI_xy,HMI_xx,HMI_yy
+        return 0.0,HMI_xy,HMI_xx,HMI_yy
+    elif norm=='add':
+        suma=HMI_xx+HMI_yy
+        if suma>0.0:
+            return 2.0*HMI_xy/suma,HMI_xy,HMI_xx,HMI_yy
+        return 0.0,HMI_xy,HMI_xx,HMI_yy
+    elif norm=='max':
+        _max=max(HMI_xx,HMI_yy)
+        if _max>0.0:
+            return HMI_xy/_max,HMI_xy,HMI_xx,HMI_yy
+        return 0.0,HMI_xy,HMI_xx,HMI_yy
+    else:
+        assert False, "ERROR: norm should be one of 'CS','add','max'"
 
 if __name__=='__main__':
     import doctest
