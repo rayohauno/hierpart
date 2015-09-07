@@ -1297,9 +1297,6 @@ def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False,
     norm : <str='CS'>
         One of 'CS' (or Cauchy Schwarz), 'add' (or additive), 'max' (or using the max function). The CS is defined as I(T,T')/sqrt(I(T,T)*I(T',T')). The add is defined as 2I(T,T')/(I(T,T)+I(T',T')). Finally, the max is defined as I(T,T')/max(I(T,T),I(T',T')).
 
-    Comment
-    -------
-
     Returns
     -------
     : (<float>,<float>,<float>,<float>)
