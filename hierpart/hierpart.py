@@ -1533,7 +1533,7 @@ def example_fig1b1c():
     1.0114042647073518
     >>>
     >>> # Fifth check; to compute:
-    >>> # i(T;T') = 0.618...
+    >>> # i(T;T') = 0.685...
     >>>
     >>> normalized_hierarchical_mutual_information(hpx,hpy,norm='CS')
     (0.68533147896158653, 0.6931471805599454, 1.0114042647073518, 1.0114042647073518)
