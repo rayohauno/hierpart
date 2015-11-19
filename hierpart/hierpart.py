@@ -1092,6 +1092,12 @@ def _plogp(p):
         return 0.0
     return p*numpy.log(p)
 
+def _node_communities(hierpart,node):
+    s=''
+    for child in hierpart.node_children(node):
+        s=s+';'+','.join(hierpart.node_elements(child))
+    return s[1:]
+
 def sub_hierarchical_mutual_information(hierpart_x,hierpart_y,node_x,node_y,depth,show=False):
     """Cumputes the hierarchical mutual information between two sub-trees.
     More specifically, it computes I( T_v ; T'_v' ), where T and T' are <HierarchicalPartitions>, v is a node in T and v' is a node in T'. Also, T_v is the sub-tree obtained from T with v as root. The analogous for T'_v'.
@@ -1155,6 +1161,12 @@ def sub_hierarchical_mutual_information(hierpart_x,hierpart_y,node_x,node_y,dept
     if denxy==0.0 or hierpart_x.node_leaf(node_x) or hierpart_y.node_leaf(node_y):
         return 0.0
 
+    if show:
+        print '# elements(node_x)',hierpart_x.node_elements(node_x)
+        print '# elements(node_y)',hierpart_y.node_elements(node_y)
+        print '# partition(node_x)',_node_communities(hierpart_x,node_x)
+        print '# partition(node_y)',_node_communities(hierpart_y,node_y)
+
     # Compute Sx
     Sx=0.0
     for child_x in hierpart_x.node_children(node_x):
@@ -1192,15 +1204,6 @@ def sub_hierarchical_mutual_information(hierpart_x,hierpart_y,node_x,node_y,dept
     ret_val=one_step+second_term_xy
 
     if show:
-
-        def node_communities(hierpart,node):
-            s=''
-            for child in hierpart.node_children(node):
-                s=s+';'+','.join(hierpart.node_elements(child))
-            return s[1:]
-
-        print '# x',node_communities(hierpart_x,node_x)
-        print '# y',node_communities(hierpart_y,node_y)
         print '# Sx',Sx
         print '# Sy',Sy
         print '# Sxy',Sxy
@@ -1418,6 +1421,124 @@ def normalized_hierarchical_mutual_information(hierpart_x,hierpart_y,show=False,
         return 0.0,HMI_xy,HMI_xx,HMI_yy
     else:
         assert False, "ERROR: norm should be one of 'CS','add','max'"
+
+# Examples
+# ========
+
+def example_fig1b1c():
+    """It reproduces the computations corresponding to Figs. 1a and 1b in the manuscript.
+
+    Example
+    -------
+    >>> # First check; to compute:
+    >>> # I(Delta_{v_{Omega}};Delta_{v'_{Omega}}|{a,b,c,d,e,f}) = 0.693...
+    >>> # [TODO] CHECK THIS BY HAND
+    >>>
+    >>> hpx=HierarchicalPartition(['a','b','c','d','e','f'])
+    >>> rootx=hpx.root()
+    >>> n1x=hpx.add_child(rootx,['a','b','c'])
+    >>> n2x=hpx.add_child(rootx,['d','e','f'])
+    >>>
+    >>> hpy=HierarchicalPartition(['a','b','c','d','e','f'])
+    >>> rooty=hpy.root()
+    >>> n1y=hpy.add_child(rooty,['a'])
+    >>> n2y=hpy.add_child(rooty,['b','c'])
+    >>> n3y=hpy.add_child(rooty,['d','e','f'])
+    >>>
+    >>> hierarchical_mutual_information(hpx,hpy,True)
+    # elements(node_x) ['a', 'b', 'c', 'd', 'e', 'f']
+    # elements(node_y) ['a', 'b', 'c', 'd', 'e', 'f']
+    # partition(node_x) a,b,c;d,e,f
+    # partition(node_y) a;b,c;d,e,f
+    # Sx 0.69314718056
+    # Sy 1.01140426471
+    # Sxy 1.01140426471
+    # Sx+Sy-Sxy 0.69314718056
+    # second_term_xy 0.0
+    # ret_val 0.69314718056
+    0.6931471805599454
+    >>>
+    >>> del hpx
+    >>> del rootx
+    >>> del n1x
+    >>> del n2x
+    >>> del hpy
+    >>> del rooty
+    >>> del n1y
+    >>> del n2y
+    >>> del n3y
+    >>>
+    >>> # Second check; to compute:
+    >>> # I(T;T') = 0.693...
+    >>> # I also checked this by hand.
+    >>>
+    >>> hpx=HierarchicalPartition(['a','b','c','d','e','f'])
+    >>> rootx=hpx.root()
+    >>> n1x=hpx.add_child(rootx,['a','b','c'])
+    >>> n2x=hpx.add_child(rootx,['d','e','f'])
+    >>> n3x=hpx.add_child(n1x,['a'])
+    >>> n4x=hpx.add_child(n1x,['b','c'])
+    >>>
+    >>> hpy=HierarchicalPartition(['a','b','c','d','e','f'])
+    >>> rooty=hpy.root()
+    >>> n1y=hpy.add_child(rooty,['a'])
+    >>> n2y=hpy.add_child(rooty,['b','c'])
+    >>> n3y=hpy.add_child(rooty,['d','e','f'])
+    >>>
+    >>> hierarchical_mutual_information(hpx,hpy,show=True)
+    # elements(node_x) ['a', 'b', 'c', 'd', 'e', 'f']
+    # elements(node_y) ['a', 'b', 'c', 'd', 'e', 'f']
+    # partition(node_x) a,b,c;d,e,f
+    # partition(node_y) a;b,c;d,e,f
+    # Sx 0.69314718056
+    # Sy 1.01140426471
+    # Sxy 1.01140426471
+    # Sx+Sy-Sxy 0.69314718056
+    # second_term_xy 0.0
+    # ret_val 0.69314718056
+    0.6931471805599454
+    >>>
+    >>> # Third check; to compute:
+    >>> # I(T;T) = 1.242...
+    >>> # I also checked this by hand.
+    >>>
+    >>> hierarchical_mutual_information(hpx,hpx,show=True)
+    # elements(node_x) ['a', 'b', 'c', 'd', 'e', 'f']
+    # elements(node_y) ['a', 'b', 'c', 'd', 'e', 'f']
+    # partition(node_x) a,b,c;d,e,f
+    # partition(node_y) a,b,c;d,e,f
+    # Sx 0.69314718056
+    # Sy 0.69314718056
+    # Sxy 0.69314718056
+    # Sx+Sy-Sxy 0.69314718056
+    # second_term_xy 0.318257084147
+    # ret_val 1.01140426471
+    1.0114042647073518
+    >>>
+    >>> # Fourth check; to compute:
+    >>> # I(T';T') = 1.011...
+    >>> # I also checked this by hand.
+    >>>
+    >>> hierarchical_mutual_information(hpy,hpy,show=True)
+    # elements(node_x) ['a', 'b', 'c', 'd', 'e', 'f']
+    # elements(node_y) ['a', 'b', 'c', 'd', 'e', 'f']
+    # partition(node_x) a;b,c;d,e,f
+    # partition(node_y) a;b,c;d,e,f
+    # Sx 1.01140426471
+    # Sy 1.01140426471
+    # Sxy 1.01140426471
+    # Sx+Sy-Sxy 1.01140426471
+    # second_term_xy 0.0
+    # ret_val 1.01140426471
+    1.0114042647073518
+    >>>
+    >>> # Fifth check; to compute:
+    >>> # i(T;T') = 0.618...
+    >>>
+    >>> normalized_hierarchical_mutual_information(hpx,hpy,norm='CS')
+    (0.68533147896158653, 0.6931471805599454, 1.0114042647073518, 1.0114042647073518)
+    >>> # Remember, this means i(T;T'), I(T;T'), I(T;T), I(T';T')
+    """
 
 if __name__=='__main__':
     import doctest
