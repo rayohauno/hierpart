@@ -22,16 +22,6 @@ import shlex
 #sys.path.insert(0, os.path.abspath('../hierpart/'))
 sys.path.insert(0, '../hierpart/')
 
-# Hack Introduced by J.I. Perotti
-# https://groups.google.com/forum/#!topic/sphinx-users/l2Yzs7kQR-E
-# import os
-#on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-#if on_rtd:
-#    html_theme = 'default'
-#else:
-#    html_theme = 'nature'
-
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -137,9 +127,8 @@ todo_include_todos = False
 # a list of builtin themes.
 #_default_themes = ['alabaster','classic','sphinx_rtd_theme','sphinxdoc','scrolls','agogo','traditional','nature','haiku','pyramid','bizstyle']
 #_default_themes[]
-html_theme = 'default'
 #html_theme = 'alabaster'
-#html_theme = 'classic'
+html_theme = 'classic'
 #html_theme = 'sphinx_rtd_theme'
 #html_theme = 'sphinxdoc' 
 #html_theme = 'scrolls' 
