@@ -128,8 +128,8 @@ todo_include_todos = False
 #_default_themes = ['alabaster','classic','sphinx_rtd_theme','sphinxdoc','scrolls','agogo','traditional','nature','haiku','pyramid','bizstyle']
 #_default_themes[]
 #html_theme = 'alabaster'
-#html_theme = 'classic'
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'classic'
+#html_theme = 'sphinx_rtd_theme'
 #html_theme = 'sphinxdoc' 
 #html_theme = 'scrolls' 
 #html_theme = 'agogo' 
